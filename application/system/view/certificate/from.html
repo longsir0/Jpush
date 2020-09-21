@@ -1,0 +1,71 @@
+<form class="layui-form" action="{:url()}" method="post" id="editForm">
+<div class="layui-form-item">
+    <label class="layui-form-label">dev 证书密码</label>
+    <div class="layui-input-inline">
+        <input type="text" class="layui-input field-devCertificatePassword" name="devCertificatePassword" lay-verify="required" autocomplete="off" placeholder="dev 证书密码">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">pro 证书密码</label>
+    <div class="layui-input-inline">
+        <input type="text" class="layui-input field-proCertificatePassword" name="proCertificatePassword" lay-verify="required" autocomplete="off" placeholder="pro 证书密码">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">dev 证书文件</label>
+    <div class="layui-input-inline">
+       <button type="button" class="layui-btn" id="cover1">上传</button>
+       <span id="cover1_name"></span>
+    </div>
+    <input type="hidden" name="devCertificateFile" id="devCertificateFile">
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">pro 证书文件</label>
+    <div class="layui-input-inline">
+       <button type="button" class="layui-btn" id="cover2">上传</button>
+       <span id="cover2_name"></span>
+    </div>
+    <input type="hidden" name="proCertificateFile" id="proCertificateFile">
+</div>
+<div class="pop-bottom-bar">
+    <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="formSubmit" hisi-data="{pop: true, refresh: true}">提交保存</button>
+    <a href="javascript:parent.layui.layer.closeAll();" class="layui-btn layui-btn-primary ml10">取消</a>
+</div>
+</form>
+{include file="block/layui" /}
+<script>
+var formData = {:json_encode($formData)};
+layui.use(['form', 'func', 'upload'], function() {
+    var $ = layui.jquery, form = layui.form;
+    layui.func.assign(formData);
+
+    layui.upload.render({
+        elem:'#cover1'
+        ,url:"{:url('upload')}"
+        ,accept:'file'  // 允许上传的文件类型
+        ,auto:true // 自动上传
+        // 上传成功回调
+        ,done:function(res) {
+            layer.msg(res.msg);
+            if(res.code == 1){
+                $("#cover1_name").text(res.data.name)
+                $("#devCertificateFile").val(res.data.path)
+            }
+        }
+    });
+    layui.upload.render({
+        elem:'#cover2'
+        ,url:"{:url('upload')}"
+        ,accept:'file'  // 允许上传的文件类型
+        ,auto:true // 自动上传
+        // 上传成功回调
+        ,done:function(res) {
+            layer.msg(res.msg);
+            if(res.code == 1){
+                $("#cover1_name").text(res.data.name)
+                $("#devCertificateFile").val(res.data.path)
+            }
+        }
+    });
+});
+</script>

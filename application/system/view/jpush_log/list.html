@@ -1,0 +1,66 @@
+<table id="dataTable"></table>
+
+{include file="block/layui" /}
+
+<script type="text/html" id="statusTpl">
+    <input type="checkbox" name="status" value="{{ d.status }}" lay-skin="switch" lay-filter="switchStatus" lay-text="正常|关闭" {{ d.status == 1 ? 'checked' : '' }} data-href="{:url('status')}?table=admin_user&id={{ d.id }}">
+</script>
+
+<script type="text/html" title="操作按钮模板" id="buttonTpl">
+    <a href="{:url('delJpushLog')}?id={{ d.id }}" class="layui-btn layui-btn-xs layui-btn-danger j-tr-del">删除</a>
+</script>
+
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-group fl">
+        <a data-href="{:url('delJpushLog')}" class="layui-btn layui-btn-primary layui-btn-sm j-page-btns confirm layui-icon layui-icon-close red">&nbsp;删除</a>
+    </div>
+</script>
+
+<script type="text/javascript">
+    layui.use(['table'], function() {
+        var table = layui.table;
+        table.render({
+            elem: '#dataTable'
+            ,url: '{:url()}' //数据接口
+            ,page: true //开启分页
+            ,skin: 'row'
+            ,even: true
+            ,limit: 20
+            ,text: {
+                none : '暂无相关数据'
+            }
+            ,toolbar: '#toolbar'
+            ,defaultToolbar: ['filter']
+            ,method: 'post'
+            ,contentType: 'application/json'
+            ,cols: [[ //表头
+                {type:'checkbox'}
+                ,{field: 'app_key', title: '应用标识', width: 100}
+                ,{field: 'platform', title: '推送平台', templet:function(d){
+                    if(d.platform == 'all'){
+                        return '全部';
+                    }else{
+                        return eval('('+d.platform+')');
+                    }
+                }}
+                ,{field: 'push_content', title: '推送内容', width: 150}
+                ,{field: 'status', title: '推送状态', templet:function(d){
+                    switch(d.status){
+                        case 0:
+                            return "待推送"
+                        break;
+                        case 1:
+                            return "已推送"
+                        break;
+                        case 2:
+                            return "推送失败"
+                        break;
+                    }
+                }}
+                ,{field: 'push_time', title: '推送时间', templet: "<div>{{layui.util.toDateString(d.push_time*1000, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                ,{field: 'create_time', title: '创建时间', templet: "<div>{{layui.util.toDateString(d.create_time*1000, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                ,{title: '操作', templet: '#buttonTpl', width:130}
+            ]]
+        });
+    });
+</script>

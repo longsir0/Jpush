@@ -1,0 +1,40 @@
+<form class="layui-form" action="{:url()}" method="post" id="editForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">应用名称</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input field-app_name" name="app_name" lay-verify="required" autocomplete="off" placeholder="应用名称">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">应用包名（Android）</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input field-android_package" name="android_package" lay-verify="required" autocomplete="off" placeholder="应用包名（Android）">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">应用分组名称</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input field-app_group_name" name="app_group_name" lay-verify="required" autocomplete="off" placeholder="应用分组名称">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">app_key</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input field-app_key" name="app_key" lay-verify="required" autocomplete="off" placeholder="应用分组名称">
+        </div>
+    </div>
+    <div class="pop-bottom-bar">
+        <input type="hidden" class="field-id" name="id">
+        <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="formSubmit" hisi-data="{pop: true, refresh: true}">提交保存</button>
+        <a href="javascript:parent.layui.layer.closeAll();" class="layui-btn layui-btn-primary ml10">取消</a>
+    </div>
+    </form>
+    {include file="block/layui" /}
+    <script>
+    var formData = {:json_encode($formData)};
+    console.log(formData)
+    layui.use(['form', 'func'], function() {
+        var $ = layui.jquery, form = layui.form;
+        layui.func.assign(formData);
+    });
+    </script>
