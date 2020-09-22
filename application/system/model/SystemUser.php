@@ -200,6 +200,8 @@ class SystemUser extends Model
             $login['nick']      = $user->nick;
             $login['mobile']    = $user->mobile;
             $login['email']     = $user->email;
+            $login['dev_key']     = $user->dev_key;
+            $login['dev_secret']     = $user->dev_secret;
             
             // 主题设置
             self::setTheme(isset($user->theme) ? $user->theme : 0);

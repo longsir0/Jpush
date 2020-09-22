@@ -93,6 +93,8 @@ class Jpush extends Admin
             $data['msg'] = '';
             return json($data);
         }
+        $user = session('admin_user');
+        $this->assign('token', 'Basic '.base64_encode($user['dev_key'].":".$user['dev_secret']));
         return $this->fetch("appList");
     }
 

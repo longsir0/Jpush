@@ -186,7 +186,7 @@ class User extends Admin
             return $this->success('修改成功');
         }
 
-        $row = UserModel::with('hasIndexs')->where('id', '=', $id)->field('id,username,nick,email,mobile,status')->find()->toArray();
+        $row = UserModel::with('hasIndexs')->where('id', '=', $id)->field('id,username,nick,email,mobile,status,dev_key,dev_secret')->find()->toArray();
 
         $row['role_id'] = array_column($row['has_indexs'], 'role_id');
         

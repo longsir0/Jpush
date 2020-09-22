@@ -22,6 +22,7 @@
 <script type="text/javascript">
     layui.use(['table'], function() {
         var table = layui.table;
+        var token = {"Authorization": '{$token}'};
         table.render({
             elem: '#dataTable'
             ,url: '{:url()}' //数据接口
@@ -36,7 +37,7 @@
             ,defaultToolbar: ['filter']
             ,method: 'post'
             ,contentType: 'application/json'
-            ,headers: {"Authorization": "Basic OWEzNjZmZGFiMmEwYmJlNmIwNDZlMTc5OjVlYTkyZjAzOGY0ZTMxYzk5MzJjZDUxMg=="}
+            ,headers: token
             ,cols: [[ //表头
                 {type:'checkbox'}
                 ,{field: 'app_name', title: '应用名称', width: 100}
